@@ -3,7 +3,7 @@ import Homepage from "./pages/Homepage";
 import PageNotFound from "./pages/PageNotFound";
 
 function App() {
-  return <PageNotFound />;
+  return <Homepage />;
 }
 
 export default App;
