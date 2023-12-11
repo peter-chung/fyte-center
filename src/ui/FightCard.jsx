@@ -1,20 +1,70 @@
-function FightCard(fightCard) {
-  const { dateTime, fights, title } = fightCard.fightCard;
-  // console.log(fights[0].fighter1.name);
-  return (
-    <>
-      <h1>{title}</h1>
-      <p>{dateTime}</p>
+function FightCard({ event }) {
+  const { dateTime, fights, link, title } = event;
 
-      <ul>
-        {fights.map((fight, i) => (
-          <li key={i}>
-            <span>{fight.fighter1.name}</span> vs{" "}
-            <span>{fight.fighter2.name}</span>
-          </li>
-        ))}
-      </ul>
-    </>
+  const mainCardFights = fights.filter((fight) => fight.isMainCard);
+  const prelimCardFights = fights.filter((fight) => !fight.isMainCard);
+
+  return (
+    <div className="bg-base-100 py-4 justify-center">
+      <div className="text-center">
+        <h2 className="justify-center text-4xl font-semibold">
+          <a href={link}>{title}</a>
+        </h2>
+        <p className="text-xl font-medium">{dateTime}</p>
+
+        <ul className="pt-4">
+          <li className="text-lg font-medium pb-2">Main Card</li>
+
+          {mainCardFights.length === 0 ? (
+            <li>No fights found... 😢</li>
+          ) : (
+            mainCardFights.map((fight, i) => (
+              <li className="pb-2" key={i}>
+                <a
+                  className="btn w-40 md:w-60 text-slate-50 bg-red-600 hover:bg-red-400"
+                  href={fight.fighter1.link}
+                >
+                  {fight.fighter1.name}
+                </a>
+                <span className="font-bold"> vs </span>
+                <a
+                  className="btn w-40 md:w-60 text-slate-50 bg-blue-600 hover:bg-blue-400"
+                  href={fight.fighter2.link}
+                >
+                  {fight.fighter2.name}
+                </a>
+              </li>
+            ))
+          )}
+        </ul>
+
+        <ul className="pt-4">
+          <li className="text-lg font-medium pb-2">Preliminary Card</li>
+          {prelimCardFights.length === 0 ? (
+            <li>No fights found... 😢</li>
+          ) : (
+            prelimCardFights.map((fight, i) => (
+              <li className="pb-2" key={i}>
+                <a
+                  className="btn w-40 md:w-60 text-slate-50 bg-red-600 hover:bg-red-400"
+                  href={fight.fighter1.link}
+                >
+                  {fight.fighter1.name}
+                </a>
+                <span className="font-bold"> vs </span>
+                <a
+                  className="btn w-40 md:w-60 text-slate-50 bg-blue-600 hover:bg-blue-400"
+                  href={fight.fighter2.link}
+                >
+                  {fight.fighter2.name}
+                </a>
+              </li>
+            ))
+          )}
+          {}
+        </ul>
+      </div>
+    </div>
   );
 }
 

@@ -1,4 +1,4 @@
-export const events = [
+export const sampleData = [
   {
     _id: "656fd823af0992961b36edfa",
     data: [

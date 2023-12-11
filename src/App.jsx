@@ -1,9 +1,13 @@
-import ThemeToggle from "./ui/ThemeToggle";
-import Homepage from "./pages/Homepage";
-import PageNotFound from "./pages/PageNotFound";
+import AppLayout from "./ui/AppLayout";
+import Navbar from "./ui/Navbar";
 
 function App() {
-  return <Homepage />;
+  return (
+    <>
+      <Navbar />
+      <AppLayout />
+    </>
+  );
 }
 
 export default App;
