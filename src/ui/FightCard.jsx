@@ -5,12 +5,12 @@ function FightCard({ event }) {
   const prelimCardFights = fights.filter((fight) => !fight.isMainCard);
 
   return (
-    <div className="bg-base-100 py-4 justify-center">
+    <div className="bg-base-100 py-4 mx-auto">
       <div className="text-center">
         <h2 className="justify-center text-4xl font-semibold">
           <a href={link}>{title}</a>
         </h2>
-        <p className="text-xl font-medium">{dateTime}</p>
+        <p className="text-xl font-medium pt-2">{dateTime}</p>
 
         <ul className="pt-4">
           <li className="text-lg font-medium pb-2">Main Card</li>
@@ -21,14 +21,14 @@ function FightCard({ event }) {
             mainCardFights.map((fight, i) => (
               <li className="pb-2" key={i}>
                 <a
-                  className="btn w-40 md:w-60 text-slate-50 bg-red-600 hover:bg-red-400"
+                  className="btn no-animation w-48 md:w-60 text-slate-100 bg-red-600 hover:bg-red-400"
                   href={fight.fighter1.link}
                 >
                   {fight.fighter1.name}
                 </a>
                 <span className="font-bold"> vs </span>
                 <a
-                  className="btn w-40 md:w-60 text-slate-50 bg-blue-600 hover:bg-blue-400"
+                  className="btn no-animation w-48 md:w-60 text-slate-100 bg-blue-600 hover:bg-blue-400"
                   href={fight.fighter2.link}
                 >
                   {fight.fighter2.name}
@@ -46,14 +46,14 @@ function FightCard({ event }) {
             prelimCardFights.map((fight, i) => (
               <li className="pb-2" key={i}>
                 <a
-                  className="btn w-40 md:w-60 text-slate-50 bg-red-600 hover:bg-red-400"
+                  className="btn no-animation w-48 md:w-60 text-slate-100 bg-red-600 hover:bg-red-400"
                   href={fight.fighter1.link}
                 >
                   {fight.fighter1.name}
                 </a>
                 <span className="font-bold"> vs </span>
                 <a
-                  className="btn w-40 md:w-60 text-slate-50 bg-blue-600 hover:bg-blue-400"
+                  className="btn no-animation w-48 md:w-60 text-slate-100 bg-blue-600 hover:bg-blue-400"
                   href={fight.fighter2.link}
                 >
                   {fight.fighter2.name}
@@ -61,7 +61,6 @@ function FightCard({ event }) {
               </li>
             ))
           )}
-          {}
         </ul>
       </div>
     </div>
