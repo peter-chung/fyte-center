@@ -3,10 +3,10 @@ import Navbar from "./ui/Navbar";
 
 function App() {
   return (
-    <>
+    <div>
       <Navbar />
       <AppLayout />
-    </>
+    </div>
   );
 }
 

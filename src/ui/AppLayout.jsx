@@ -2,19 +2,32 @@ import { useEffect, useState } from "react";
 
 import EventsMenuSidebar from "./EventsMenuSidebar";
 import FightCard from "./FightCard";
-import { sampleData } from "../sample-data/sampleData";
-import axios from "axios";
+import Loader from "./Loader";
 
 function AppLayout() {
-  const events = sampleData[0].data;
-  const [eventsData, setEventsData] = useState(null);
-  const [selectedEvent, setSelectedEvent] = useState(events[0]);
+  const [events, setEvents] = useState([]);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const getEvents = async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch("https://mma-events-api.vercel.app/events");
+      const data = await response.json();
+      setEvents(data[0].data);
+      setSelectedEvent(data[0].data[0]);
+    } catch (err) {
+      console.log(err.message);
+    }
+
+    setIsLoading(false);
+  };
 
   useEffect(() => {
-    axios
-      .get("https://mma-events-api.vercel.app/events")
-      .then((response) => console.log(response.data));
+    getEvents();
   }, []);
+
+  if (isLoading) return <Loader />;
 
   return (
     <div className="flex">
