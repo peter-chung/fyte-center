@@ -4,5 +4,7 @@ import eslint from "vite-plugin-eslint";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), eslint()],
+  content: ["node_modules/flowbite-react/lib/esm/**/*.js"],
+  // eslint-disable-next-line no-undef
+  plugins: [react(), eslint(), require("flowbite/plugin")],
 });
