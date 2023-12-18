@@ -31,11 +31,11 @@ function AppLayout() {
 
   return (
     <div className="flex">
-      <EventsMenuSidebar
+      {/* <EventsMenuSidebar
         events={events}
         handleClick={setSelectedEvent}
         selectedEvent={selectedEvent}
-      />
+      /> */}
       <FightCard event={selectedEvent} />
     </div>
   );
