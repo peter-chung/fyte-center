@@ -29,7 +29,7 @@ function Layout() {
 
   if (isLoading) return <Loader />;
   return (
-    <div className="min-h-screen text-gray-800 dark:text-white bg-white dark:bg-gray-800">
+    <div className="min-h-screen text-neutral-800 dark:text-white bg-white dark:bg-neutral-800">
       <Navbar />
       <Sidebar
         events={events}
