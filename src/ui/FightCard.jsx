@@ -39,7 +39,7 @@ function FightCard({ event }) {
         </ul>
 
         {/* prelims */}
-        <ul className="pt-4">
+        <ul className="">
           <li className="text-lg font-medium pb-2">Preliminary Card</li>
           {prelimCardFights.length === 0 ? (
             <li>No fights found... 😢</li>
