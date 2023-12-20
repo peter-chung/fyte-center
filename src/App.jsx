@@ -1,24 +1,14 @@
-// import { DarkThemeToggle, Flowbite } from "flowbite-react";
-
-import AppLayout from "./ui/AppLayout";
-import Navbar from "./ui/Navbar";
+// import "flowbite";
+import { DarkModeProvider } from "./context/DarkModeContext";
 import Layout from "./ui/Layout";
-import Drawer from "./ui/Drawer";
-import "flowbite";
+import Test from "./ui/Test";
 
 function App() {
-  // return <Layout />;
-  return <Layout />;
+  return (
+    <DarkModeProvider>
+      <Layout />
+    </DarkModeProvider>
+  );
 }
 
 export default App;
-
-{
-  /* <DarkThemeToggle /> */
-}
-{
-  /* <Navbar /> */
-}
-{
-  /* <AppLayout /> */
-}
