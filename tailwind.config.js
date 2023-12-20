@@ -2,7 +2,7 @@
 export default {
   content: [
     "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
+    "./src/**/*.{js,jsx,ts,tsx}",
     "./node_modules/flowbite/**/*.js",
     "node_modules/flowbite-react/lib/esm/**/*.js",
   ],
@@ -11,5 +11,4 @@ export default {
   },
   // eslint-disable-next-line no-undef
   plugins: [require("flowbite/plugin")],
-  darkMode: "class",
 };
