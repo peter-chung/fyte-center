@@ -2,7 +2,7 @@ import DarkModeToggle from "./DarkModeToggle";
 
 function Navbar() {
   return (
-    <nav className="fixed top-0 z-50 w-full bg-white border-b border-neutral-200 dark:bg-neutral-800 dark:border-neutral-700">
+    <nav className="fixed top-0 z-50 w-full shadow-md bg-white border-b border-neutral-200 dark:bg-neutral-800 dark:border-neutral-700">
       <div className="px-3 py-3 lg:px-5 lg:pl-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center justify-start rtl:justify-end">

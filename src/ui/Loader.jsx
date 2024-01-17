@@ -6,7 +6,7 @@ function Loader() {
     >
       <svg
         aria-hidden="true"
-        className="w-12 h-12 text-neutral-100 animate-spin dark:text-neutral-500 fill-neutral-100"
+        className="w-12 h-12 animate-spin text-neutral-300 fill-neutral-500 dark:text-neutral-500 dark:fill-neutral-300"
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
