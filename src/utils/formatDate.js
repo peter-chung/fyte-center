@@ -12,7 +12,9 @@ export function formatDate(date) {
     November: "Nov",
     December: "Dec",
   };
-  const convertedDate = date.split(",").at(1).trim().split(" ");
+  // removes 2 or more spaces from string
+  const removeSpaces = date.replace(/\s{2,}/g, " ").trim();
+  const convertedDate = removeSpaces.split(",").at(1).trim().split(" ");
   const formattedMonth = abbreviations[convertedDate[0]];
   const formattedDay = convertedDate[1];
 
