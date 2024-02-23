@@ -31,7 +31,7 @@ function Layout() {
 
   return (
     <div className="min-h-screen text-neutral-800 dark:text-white bg-white dark:bg-neutral-800">
-      <Navbar />
+      {/* <Navbar /> */}
       <Sidebar
         events={events}
         handleClick={setSelectedEvent}
