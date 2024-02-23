@@ -5,7 +5,7 @@ function Sidebar({ events, handleClick, selectedEvent }) {
     <div>
       <aside
         id="default-sidebar"
-        className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 bg-white border-r border-neutral-200 dark:bg-neutral-800 dark:border-neutral-700"
+        className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full md:translate-x-0 bg-white border-r border-neutral-200 dark:bg-neutral-800 dark:border-neutral-700"
         aria-label="Sidebar"
       >
         <div className="h-full px-3 py-4 overflow-y-auto bg-white dark:bg-neutral-800">
