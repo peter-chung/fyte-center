@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { initFlowbite } from "flowbite";
+
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import Loader from "./Loader";
@@ -27,11 +29,15 @@ function Layout() {
     getEvents();
   }, []);
 
+  useEffect(() => {
+    initFlowbite();
+  }, [isLoading]);
+
   if (isLoading) return <Loader />;
 
   return (
     <div className="min-h-screen text-neutral-800 dark:text-white bg-white dark:bg-neutral-800">
-      {/* <Navbar /> */}
+      <Navbar />
       <Sidebar
         events={events}
         handleClick={setSelectedEvent}

@@ -1,6 +1,5 @@
 import { DarkModeProvider } from "./context/DarkModeContext";
 import Layout from "./ui/Layout";
-import "flowbite";
 
 function App() {
   return (
