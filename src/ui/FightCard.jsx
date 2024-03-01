@@ -21,14 +21,14 @@ function FightCard({ event }) {
             mainCardFights.map((fight, i) => (
               <li className="pb-2" key={i}>
                 <a
-                  className="inline-flex justify-center pt-2 w-48 md:w-60 h-10 rounded-md text-md font-medium text-neutral-100 bg-red-600 hover:bg-red-400"
+                  className="inline-flex justify-center pt-2 w-44 sm:w-60 h-10 rounded-md text-md font-medium text-neutral-100 bg-red-600 hover:bg-red-400"
                   href={fight.fighter1.link}
                 >
                   <span>{fight.fighter1.name}</span>
                 </a>
                 <span className="font-bold"> vs </span>
                 <a
-                  className="inline-flex justify-center pt-2 w-48 md:w-60 h-10 rounded-md text-md font-medium text-neutral-100 bg-blue-600 hover:bg-blue-400"
+                  className="inline-flex justify-center pt-2 w-44 sm:w-60 h-10 rounded-md text-md font-medium text-neutral-100 bg-blue-600 hover:bg-blue-400"
                   href={fight.fighter2.link}
                 >
                   {fight.fighter2.name}
@@ -47,14 +47,14 @@ function FightCard({ event }) {
             prelimCardFights.map((fight, i) => (
               <li className="pb-2" key={i}>
                 <a
-                  className="inline-flex justify-center pt-2 w-48 md:w-60 h-10 rounded-md text-md font-medium text-neutral-100 bg-red-600 hover:bg-red-400"
+                  className="inline-flex justify-center pt-2 w-44 sm:w-60 h-10 rounded-md text-md font-medium text-neutral-100 bg-red-600 hover:bg-red-400"
                   href={fight.fighter1.link}
                 >
                   {fight.fighter1.name}
                 </a>
                 <span className="font-bold"> vs </span>
                 <a
-                  className="inline-flex justify-center pt-2 w-48 md:w-60 h-10 rounded-md text-md font-medium text-neutral-100 bg-blue-600 hover:bg-blue-400"
+                  className="inline-flex justify-center pt-2 w-44 sm:w-60 h-10 rounded-md text-md font-medium text-neutral-100 bg-blue-600 hover:bg-blue-400"
                   href={fight.fighter2.link}
                 >
                   {fight.fighter2.name}
