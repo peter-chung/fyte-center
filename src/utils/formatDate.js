@@ -9,6 +9,7 @@ export function formatDate(date) {
     July: "July",
     August: "Aug",
     September: "Sept",
+    October: "Oct",
     November: "Nov",
     December: "Dec",
   };
