@@ -1,5 +1,5 @@
 function FightCard({ event }) {
-  const { dateTime, fights, link, title } = event;
+  const { details, fights, link, title, dateTime } = event;
 
   const mainCardFights = fights.filter((fight) => fight.isMainCard);
   const prelimCardFights = fights.filter((fight) => !fight.isMainCard);

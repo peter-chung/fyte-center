@@ -1,4 +1,5 @@
 import formatDate from "../utils/formatDate";
+import formatTitle from "../utils/formatTitle";
 
 function Sidebar({ events, handleClick, selectedEvent }) {
   return (
@@ -21,7 +22,8 @@ function Sidebar({ events, handleClick, selectedEvent }) {
                   onClick={() => handleClick(events[index])}
                 >
                   <span className="pl-2">
-                    {formatDate(event.dateTime)} - {event.title}
+                    {formatDate(event.dateTime)} - {formatTitle(event.title)}
+                    {/* {event.details[0].dateTime} - {event.title} */}
                   </span>
                 </a>
               </li>
