@@ -5,6 +5,7 @@ import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import Loader from "./Loader";
 import FightCard from "./FightCard";
+import normalizeMmaEvents from "../utils/normalizeMmaEvents";
 
 function Layout() {
   const [events, setEvents] = useState([]);
@@ -16,13 +17,17 @@ function Layout() {
       setIsLoading(true);
       const response = await fetch("https://mma-events-api.vercel.app/events");
       const data = await response.json();
-      setEvents(data[0].data);
-      setSelectedEvent(data[0].data[0]);
+      const normalizedEvents = normalizeMmaEvents(data);
+
+      setEvents(normalizedEvents);
+      setSelectedEvent(normalizedEvents[0] ?? null);
     } catch (err) {
       console.log(err.message);
+      setEvents([]);
+      setSelectedEvent(null);
+    } finally {
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
   };
 
   useEffect(() => {
