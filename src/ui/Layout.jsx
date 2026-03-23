@@ -7,6 +7,8 @@ import Loader from "./Loader";
 import FightCard from "./FightCard";
 import normalizeMmaEvents from "../utils/normalizeMmaEvents";
 
+const EVENTS_API_URL = import.meta.env.VITE_EVENTS_API_URL ?? "/api/events";
+
 function Layout() {
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -15,7 +17,12 @@ function Layout() {
   const getEvents = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch("https://mma-events-api.vercel.app/events");
+      const response = await fetch(EVENTS_API_URL);
+
+      if (!response.ok) {
+        throw new Error(`Events request failed with status ${response.status}.`);
+      }
+
       const data = await response.json();
       const normalizedEvents = normalizeMmaEvents(data);
 
