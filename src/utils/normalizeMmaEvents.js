@@ -12,7 +12,15 @@ function normalizeFight(fight = {}) {
   };
 }
 
+function formatLocation({ city = "", state = "", country = "" } = {}) {
+  return [city, state, country].filter(Boolean).join(", ");
+}
+
 function normalizeEvent(event = {}) {
+  const city = event.city ?? "";
+  const state = event.state ?? "";
+  const country = event.country ?? "";
+
   return {
     title: event.title ?? "Unnamed Event",
     link: event.link ?? "",
@@ -20,7 +28,10 @@ function normalizeEvent(event = {}) {
     mainCardStartIso: event.mainCardStartIso ?? "",
     prelimsStartIso: event.prelimsStartIso ?? "",
     venue: event.venue ?? "",
-    location: event.location ?? "",
+    city,
+    state,
+    country,
+    location: formatLocation({ city, state, country }) || (event.location ?? ""),
     fights: Array.isArray(event.fights) ? event.fights.map(normalizeFight) : [],
   };
 }
