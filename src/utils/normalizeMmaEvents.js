@@ -1,6 +1,16 @@
+const validCardSections = new Set(["main", "prelims", "early_prelims"]);
+
+function normalizeCardSection(cardSection) {
+  return validCardSections.has(cardSection) ? cardSection : null;
+}
+
 function normalizeFight(fight = {}) {
   return {
-    isMainCard: Boolean(fight.isMainCard),
+    cardSection: normalizeCardSection(fight.cardSection),
+    sourceCardSegment:
+      typeof fight.sourceCardSegment === "string" && fight.sourceCardSegment.trim()
+        ? fight.sourceCardSegment
+        : null,
     fighter1: {
       name: fight.fighter1?.name ?? "TBD",
       link: fight.fighter1?.link ?? "",
@@ -27,6 +37,7 @@ function normalizeEvent(event = {}) {
     dateTime: event.mainCardStartIso ?? event.dateTime ?? "",
     mainCardStartIso: event.mainCardStartIso ?? "",
     prelimsStartIso: event.prelimsStartIso ?? "",
+    earlyPrelimsStartIso: event.earlyPrelimsStartIso ?? "",
     venue: event.venue ?? "",
     city,
     state,
