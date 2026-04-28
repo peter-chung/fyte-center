@@ -51,10 +51,12 @@ body::-webkit-scrollbar-thumb:hover,
   background-color: var(--scrollbar-thumb-hover);
 }
 
-html {
+html,
+body {
   background-color: #ffffff;
 }
 
-.dark html {
+html.dark,
+html.dark body {
   background-color: #26262b;
 }
