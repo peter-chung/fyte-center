@@ -146,17 +146,17 @@ function FightCard({ event }) {
               {title}
             </a>
           </h2>
-          <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-sm text-neutral-600 dark:text-neutral-300">
-            <span className="rounded-full bg-neutral-100 px-3 py-1 ring-1 ring-neutral-200 dark:bg-neutral-800 dark:ring-neutral-700">
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-sm font-medium text-neutral-600 dark:text-neutral-300">
+            <span className="rounded-full bg-white px-3 py-1 ring-1 ring-neutral-200 dark:bg-neutral-800 dark:ring-neutral-700">
               {formatDate(dateTime)}
             </span>
             {venue && (
-              <span className="rounded-full bg-neutral-100 px-3 py-1 ring-1 ring-neutral-200 dark:bg-neutral-800 dark:ring-neutral-700">
+              <span className="rounded-full bg-white px-3 py-1 ring-1 ring-neutral-200 dark:bg-neutral-800 dark:ring-neutral-700">
                 {venue}
               </span>
             )}
             {location && (
-              <span className="rounded-full bg-neutral-100 px-3 py-1 ring-1 ring-neutral-200 dark:bg-neutral-800 dark:ring-neutral-700">
+              <span className="rounded-full bg-white px-3 py-1 ring-1 ring-neutral-200 dark:bg-neutral-800 dark:ring-neutral-700">
                 {location}
               </span>
             )}
