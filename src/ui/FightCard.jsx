@@ -56,16 +56,6 @@ function FightCard({ event }) {
         </li>
       );
     });
-  const renderSectionTimes = (sections, className = "pt-4") =>
-    sections.length > 0 ? (
-      <div className={`${className} text-sm text-neutral-600 dark:text-neutral-300`}>
-        {sections.map((section) => (
-          <p key={section.key}>
-            {section.title}: {formatStartTime(section.startIso)}
-          </p>
-        ))}
-      </div>
-    ) : null;
   const renderSectionTimeHeaders = (
     sections,
     className = "",
@@ -81,7 +71,7 @@ function FightCard({ event }) {
         </p>
         {showPlacementNote ? (
           <p className="pb-2 text-sm text-neutral-500 dark:text-neutral-400">
-            Fights for this section have not been assigned yet. 😢
+            Bout assignments for this section have not been announced yet. 😢
           </p>
         ) : null}
       </div>
@@ -165,15 +155,19 @@ function FightCard({ event }) {
 
         {hasNoFights ? (
           <div className="pt-4">
-            <p className="text-neutral-600 dark:text-neutral-300">
-              Matchups have not been announced yet. 😢
-            </p>
             {publishedSectionTimes.length > 0 ? (
-              renderSectionTimes(publishedSectionTimes)
+              renderSectionTimeHeaders(publishedSectionTimes, "", {
+                showPlacementNote: true,
+              })
             ) : (
-              <p className="pt-4 text-sm text-neutral-500 dark:text-neutral-400">
-                Start times are still to be determined.
-              </p>
+              <>
+                <p className="text-neutral-600 dark:text-neutral-300">
+                  Matchups have not been announced yet. 😢
+                </p>
+                <p className="pt-4 text-sm text-neutral-500 dark:text-neutral-400">
+                  Start times are still to be determined.
+                </p>
+              </>
             )}
           </div>
         ) : showUnknownAsFullCard ? (
