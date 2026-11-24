@@ -26,10 +26,10 @@ function Sidebar({ events, handleClick, selectedEvent }) {
           <ul className="space-y-3">
             {events.map((event, index) => {
               const { label, matchup } = getEventTitleParts(event.title);
-              const isSelected = selectedEvent?.link === event.link;
+              const isSelected = selectedEvent?.eventId === event.eventId;
 
               return (
-                <li key={index}>
+                <li key={event.eventId}>
                   <button
                     type="button"
                     className={`w-full rounded-xl border-l-2 px-3 py-3 text-left transition-colors ${
