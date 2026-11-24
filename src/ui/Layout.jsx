@@ -5,9 +5,7 @@ import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import Loader from "./Loader";
 import FightCard from "./FightCard";
-import normalizeMmaEvents from "../utils/normalizeMmaEvents";
-
-const EVENTS_API_URL = import.meta.env.VITE_EVENTS_API_URL ?? "/api/events";
+import getUpcomingEvents from "../data/getUpcomingEvents";
 
 function Layout() {
   const [events, setEvents] = useState([]);
@@ -17,17 +15,10 @@ function Layout() {
   const getEvents = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch(EVENTS_API_URL);
+      const upcomingEvents = await getUpcomingEvents();
 
-      if (!response.ok) {
-        throw new Error(`Events request failed with status ${response.status}.`);
-      }
-
-      const data = await response.json();
-      const normalizedEvents = normalizeMmaEvents(data);
-
-      setEvents(normalizedEvents);
-      setSelectedEvent(normalizedEvents[0] ?? null);
+      setEvents(upcomingEvents);
+      setSelectedEvent(upcomingEvents[0] ?? null);
     } catch (err) {
       console.log(err.message);
       setEvents([]);
