@@ -3,7 +3,10 @@ export function formatDate(date) {
     return "TBD";
   }
 
-  const parsedDate = new Date(date);
+  // Only ISO timestamps carry a real start time. A long date like
+  // "Saturday, December 12, 2026" would also parse, but as local midnight,
+  // showing "Dec 12, 12:00 AM", so it goes through the text branch below.
+  const parsedDate = /^\d{4}-\d{2}-\d{2}T/.test(date) ? new Date(date) : new Date(NaN);
 
   if (!Number.isNaN(parsedDate.getTime())) {
     return parsedDate.toLocaleString("en-US", {
@@ -41,6 +44,21 @@ export function formatDate(date) {
   const formattedDay = convertedDate[1];
 
   return (formattedMonth ?? convertedDate[0]) + " " + formattedDay;
+}
+
+// "2026-11-21" (a bare event date) → "Nov 21, 2026". Read at noon UTC so the
+// day never shifts with the viewer's time zone.
+export function formatEventDate(eventDate) {
+  if (!eventDate) {
+    return "TBD";
+  }
+
+  return new Date(`${eventDate}T12:00:00Z`).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  });
 }
 
 export default formatDate;

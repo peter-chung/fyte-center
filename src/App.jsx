@@ -1,10 +1,26 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
 import { DarkModeProvider } from "./context/DarkModeContext";
 import Layout from "./ui/Layout";
+import EventPage from "./ui/EventPage";
+import NotFound from "./ui/NotFound";
 
+// /                  → next upcoming card
+// /results           → most recent results
+// /events/:eventId   → any event, upcoming or past (shareable link)
 function App() {
   return (
     <DarkModeProvider>
-      <Layout />
+      <BrowserRouter>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route index element={<EventPage defaultTab="upcoming" />} />
+            <Route path="results" element={<EventPage defaultTab="results" />} />
+            <Route path="events/:eventId" element={<EventPage />} />
+            <Route path="*" element={<NotFound />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </DarkModeProvider>
   );
 }
