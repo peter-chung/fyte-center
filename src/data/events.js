@@ -58,8 +58,8 @@ function toFighter(stat) {
   };
 }
 
-// ufcstats lists the winner in corner 1 and writes each judge's score as
-// "<loser> - <winner>" (checked across 1,000 decisions), so flip it to read
+// ufcstats writes each judge's score as "<loser> - <winner>" (checked across
+// 1,000 decisions; independent of which corner won), so flip it to read
 // winner-first: "27 - 30" → "30-27". Draws read the same either way.
 function judgeScores(details) {
   return [...details.matchAll(/(\d+)\s*-\s*(\d+)/g)].map(
