@@ -13,6 +13,7 @@ function Layout() {
   const [hasMorePast, setHasMorePast] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [lastEventTab, setLastEventTab] = useState("upcoming");
 
   const { pathname } = useLocation();
   const selectedEventId = useMatch("/events/:eventId")?.params.eventId ?? null;
@@ -61,9 +62,19 @@ function Layout() {
   };
 
   // An /events/:id link opens on the Results tab unless it's an upcoming card.
+  // Pages that aren't events (a fighter) keep whichever tab was open before,
+  // so going from a results card to a fighter doesn't flip the sidebar.
   const isUpcomingEvent = upcomingEvents.some((event) => event.eventId === selectedEventId);
-  const activeTab =
-    pathname === "/results" || (selectedEventId && !isUpcomingEvent) ? "results" : "upcoming";
+  const eventTab =
+    pathname === "/results" || (selectedEventId && !isUpcomingEvent)
+      ? "results"
+      : pathname === "/" || selectedEventId
+        ? "upcoming"
+        : null;
+  if (eventTab && eventTab !== lastEventTab) {
+    setLastEventTab(eventTab);
+  }
+  const activeTab = eventTab ?? lastEventTab;
   const highlightedEventId =
     selectedEventId ??
     (pathname === "/results" ? pastEvents[0]?.eventId : null) ??

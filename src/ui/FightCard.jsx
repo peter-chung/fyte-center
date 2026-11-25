@@ -1,8 +1,12 @@
+import { Building2, CalendarDays, Clock, MapPin } from "lucide-react";
+
+import Chip from "./Chip";
+import FighterLink from "./FighterLink";
 import formatDate from "../utils/formatDate";
 
 const fightCardSections = [
   { key: "main", title: "Main Card", timeKey: "mainCardStartIso" },
-  { key: "prelims", title: "Preliminary Card", timeKey: "prelimsStartIso" },
+  { key: "prelims", title: "Prelims", timeKey: "prelimsStartIso" },
   { key: "early_prelims", title: "Early Prelims", timeKey: "earlyPrelimsStartIso" },
 ];
 
@@ -36,23 +40,19 @@ function FightCard({ event }) {
           className="mx-auto flex max-w-2xl items-center justify-center gap-2 pb-2"
           key={key}
         >
-          <a
+          <FighterLink
             className="inline-flex h-10 min-w-0 flex-1 items-center justify-center rounded-md bg-red-600 px-3 text-md font-medium text-neutral-100 hover:bg-red-400"
-            href={fight.fighter1.link || undefined}
-            rel="noreferrer"
-            target="_blank"
+            fighter={fight.fighter1}
           >
             <span className="truncate">{fight.fighter1.name}</span>
-          </a>
+          </FighterLink>
           <span className="w-10 shrink-0 text-center font-bold">vs</span>
-          <a
+          <FighterLink
             className="inline-flex h-10 min-w-0 flex-1 items-center justify-center rounded-md bg-blue-600 px-3 text-md font-medium text-neutral-100 hover:bg-blue-400"
-            href={fight.fighter2.link || undefined}
-            rel="noreferrer"
-            target="_blank"
+            fighter={fight.fighter2}
           >
             <span className="truncate">{fight.fighter2.name}</span>
-          </a>
+          </FighterLink>
         </li>
       );
     });
@@ -65,8 +65,9 @@ function FightCard({ event }) {
       <div className={className} key={section.key}>
         <p className="pb-1 text-lg font-medium">
           {section.title}{" "}
-          <span className="text-base font-normal text-neutral-500 dark:text-neutral-300">
-            ({formatStartTime(section.startIso)})
+          <span className="inline-flex items-center gap-1 text-base font-normal text-neutral-500 dark:text-neutral-300">
+            <Clock aria-hidden="true" className="h-4 w-4" />
+            {formatStartTime(section.startIso)}
           </span>
         </p>
         {showPlacementNote ? (
@@ -137,19 +138,9 @@ function FightCard({ event }) {
             </a>
           </h2>
           <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-sm font-medium text-neutral-600 dark:text-neutral-300">
-            <span className="rounded-full bg-white px-3 py-1 ring-1 ring-neutral-200 dark:bg-neutral-800 dark:ring-neutral-700">
-              {formatDate(dateTime)}
-            </span>
-            {venue && (
-              <span className="rounded-full bg-white px-3 py-1 ring-1 ring-neutral-200 dark:bg-neutral-800 dark:ring-neutral-700">
-                {venue}
-              </span>
-            )}
-            {location && (
-              <span className="rounded-full bg-white px-3 py-1 ring-1 ring-neutral-200 dark:bg-neutral-800 dark:ring-neutral-700">
-                {location}
-              </span>
-            )}
+            <Chip icon={CalendarDays}>{formatDate(dateTime)}</Chip>
+            {venue && <Chip icon={Building2}>{venue}</Chip>}
+            {location && <Chip icon={MapPin}>{location}</Chip>}
           </div>
         </div>
 
@@ -198,8 +189,9 @@ function FightCard({ event }) {
                     <li className="pb-2 text-lg font-medium">
                       {section.title}{" "}
                       {startIso ? (
-                        <span className="text-base font-normal text-neutral-500 dark:text-neutral-300">
-                          ({formatStartTime(startIso)})
+                        <span className="inline-flex items-center gap-1 text-base font-normal text-neutral-500 dark:text-neutral-300">
+                          <Clock aria-hidden="true" className="h-4 w-4" />
+                          {formatStartTime(startIso)}
                         </span>
                       ) : null}
                     </li>

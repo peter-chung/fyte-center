@@ -48,10 +48,11 @@ function toFighter(stat) {
   const name = [fighter?.first_name, fighter?.last_name].filter(Boolean).join(" ").trim();
 
   if (!stat?.fighter_id) {
-    return { name: "TBD", link: "", result: null };
+    return { fighterId: null, name: "TBD", link: "", result: null };
   }
 
   return {
+    fighterId: stat.fighter_id,
     name: name || "TBD",
     link: fighter?.link || `http://ufcstats.com/fighter-details/${stat.fighter_id}`,
     result: stat.result ?? null,
@@ -69,7 +70,7 @@ function judgeScores(details) {
 
 // "KO/TKO (Punch to Head At Distance) · R2 4:58",
 // "Unanimous Decision (30-27, 30-27, 29-28)"
-function resultSummary(fight) {
+export function resultSummary(fight) {
   const method = (fight.method || "").trim();
 
   if (!method) {
