@@ -1,9 +1,12 @@
+import { CalendarDays, Check, MapPin } from "lucide-react";
+
+import Chip from "./Chip";
 import FighterLink from "./FighterLink";
 import { formatEventDate } from "../utils/formatDate";
 
 const cardSections = [
   { key: "main", title: "Main Card" },
-  { key: "prelims", title: "Preliminary Card" },
+  { key: "prelims", title: "Prelims" },
   { key: "early_prelims", title: "Early Prelims" },
 ];
 
@@ -37,9 +40,7 @@ function FighterButton({ fighter, colorClasses, isLoser }) {
     >
       <span className="truncate">{fighter.name}</span>
       {isWinner ? (
-        <span aria-label="winner" className="shrink-0">
-          ✓
-        </span>
+        <Check aria-label="winner" className="h-4 w-4 shrink-0" strokeWidth={3} />
       ) : null}
     </FighterLink>
   );
@@ -91,14 +92,8 @@ function ResultsCard({ event }) {
             </a>
           </h2>
           <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-sm font-medium text-neutral-600 dark:text-neutral-300">
-            <span className="rounded-full bg-white px-3 py-1 ring-1 ring-neutral-200 dark:bg-neutral-800 dark:ring-neutral-700">
-              {formatEventDate(eventDate)}
-            </span>
-            {location ? (
-              <span className="rounded-full bg-white px-3 py-1 ring-1 ring-neutral-200 dark:bg-neutral-800 dark:ring-neutral-700">
-                {location}
-              </span>
-            ) : null}
+            <Chip icon={CalendarDays}>{formatEventDate(eventDate)}</Chip>
+            {location ? <Chip icon={MapPin}>{location}</Chip> : null}
           </div>
         </div>
 

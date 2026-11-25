@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { CalendarDays, ChevronDown, LoaderCircle, Trophy } from "lucide-react";
 
 import { formatEventDate } from "../utils/formatDate";
 
@@ -19,8 +20,8 @@ function getEventTitleParts(title) {
 }
 
 const tabs = [
-  { key: "upcoming", label: "Upcoming", to: "/" },
-  { key: "results", label: "Results", to: "/results" },
+  { key: "upcoming", label: "Upcoming", to: "/", Icon: CalendarDays },
+  { key: "results", label: "Results", to: "/results", Icon: Trophy },
 ];
 
 function Sidebar({
@@ -49,12 +50,13 @@ function Sidebar({
                 <Link
                   key={tab.key}
                   to={tab.to}
-                  className={`rounded-lg px-3 py-1.5 text-center text-sm font-semibold transition-colors ${
+                  className={`inline-flex items-center justify-center gap-1.5 rounded-lg px-3 py-1.5 text-center text-sm font-semibold transition-colors ${
                     activeTab === tab.key
                       ? "bg-white text-red-600 shadow-sm dark:bg-neutral-800 dark:text-red-400"
                       : "text-neutral-600 hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-white"
                   }`}
                 >
+                  <tab.Icon aria-hidden="true" className="h-4 w-4" />
                   {tab.label}
                 </Link>
               ))}
@@ -109,8 +111,13 @@ function Sidebar({
                 type="button"
                 onClick={onLoadMore}
                 disabled={isLoadingMore}
-                className="mt-4 w-full rounded-xl border border-neutral-200 px-3 py-2 text-sm font-semibold text-neutral-700 transition-colors hover:bg-neutral-100 disabled:opacity-60 dark:border-neutral-700 dark:text-neutral-200 dark:hover:bg-neutral-700"
+                className="mt-4 inline-flex w-full items-center justify-center gap-1.5 rounded-xl border border-neutral-200 px-3 py-2 text-sm font-semibold text-neutral-700 transition-colors hover:bg-neutral-100 disabled:opacity-60 dark:border-neutral-700 dark:text-neutral-200 dark:hover:bg-neutral-700"
               >
+                {isLoadingMore ? (
+                  <LoaderCircle aria-hidden="true" className="h-4 w-4 animate-spin" />
+                ) : (
+                  <ChevronDown aria-hidden="true" className="h-4 w-4" />
+                )}
                 {isLoadingMore ? "Loading…" : "Load more"}
               </button>
             ) : null}

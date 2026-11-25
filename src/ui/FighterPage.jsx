@@ -1,13 +1,21 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 
+import {
+  ArrowLeft,
+  Cake,
+  ExternalLink,
+  Footprints,
+  MoveHorizontal,
+  Ruler,
+  Scale,
+} from "lucide-react";
+
+import Chip from "./Chip";
 import Loader from "./Loader";
 import NotFound from "./NotFound";
 import { getFighter } from "../data/fighters";
 import { formatEventDate } from "../utils/formatDate";
-
-const chipClasses =
-  "rounded-full bg-white px-3 py-1 ring-1 ring-neutral-200 dark:bg-neutral-800 dark:ring-neutral-700";
 
 const resultStyles = {
   W: { label: "W", classes: "bg-green-600 text-white" },
@@ -106,11 +114,12 @@ function BackButton() {
   return (
     <div className="mx-auto max-w-3xl px-6 text-left">
       <button
-        className="text-sm font-medium text-neutral-500 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-white"
+        className="inline-flex items-center gap-1 text-sm font-medium text-neutral-500 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-white"
         onClick={() => navigate(-1)}
         type="button"
       >
-        ← Back
+        <ArrowLeft aria-hidden="true" className="h-4 w-4" />
+        Back
       </button>
     </div>
   );
@@ -153,12 +162,12 @@ function FighterPage() {
   }
 
   const chips = [
-    fighter.weightClass,
-    fighter.age != null ? `Age ${fighter.age}` : "",
-    fighter.height,
-    fighter.reach ? `${fighter.reach} reach` : "",
-    fighter.stance,
-  ].filter(Boolean);
+    { icon: Scale, text: fighter.weightClass },
+    { icon: Cake, text: fighter.age != null ? `Age ${fighter.age}` : "" },
+    { icon: Ruler, text: fighter.height },
+    { icon: MoveHorizontal, text: fighter.reach ? `${fighter.reach} reach` : "" },
+    { icon: Footprints, text: fighter.stance },
+  ].filter((chip) => chip.text);
   const hasStats = statRows.some((row) => fighter.careerStats[row.key] != null);
 
   return (
@@ -188,9 +197,9 @@ function FighterPage() {
           {chips.length > 0 ? (
             <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-sm font-medium text-neutral-600 dark:text-neutral-300">
               {chips.map((chip) => (
-                <span className={chipClasses} key={chip}>
-                  {chip}
-                </span>
+                <Chip icon={chip.icon} key={chip.text}>
+                  {chip.text}
+                </Chip>
               ))}
             </div>
           ) : null}
@@ -230,8 +239,14 @@ function FighterPage() {
 
         {fighter.link ? (
           <p className="pt-6 text-sm text-neutral-500 dark:text-neutral-400">
-            <a className="hover:underline" href={fighter.link} rel="noreferrer" target="_blank">
+            <a
+              className="inline-flex items-center gap-1 hover:underline"
+              href={fighter.link}
+              rel="noreferrer"
+              target="_blank"
+            >
               View on UFC Stats
+              <ExternalLink aria-hidden="true" className="h-3.5 w-3.5" />
             </a>
           </p>
         ) : null}
