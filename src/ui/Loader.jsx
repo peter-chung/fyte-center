@@ -1,7 +1,10 @@
-function Loader() {
+// Full-screen by default; pass `inline` for a spinner inside the content area.
+function Loader({ inline = false }) {
   return (
     <div
-      className="flex items-center justify-center min-h-screen min-w-screen bg-white dark:bg-neutral-800"
+      className={`flex items-center justify-center bg-white dark:bg-neutral-800 ${
+        inline ? "pt-32 md:ml-60" : "min-h-screen min-w-screen"
+      }`}
       role="status"
     >
       <svg
