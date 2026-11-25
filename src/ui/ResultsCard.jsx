@@ -1,3 +1,4 @@
+import FighterLink from "./FighterLink";
 import { formatEventDate } from "../utils/formatDate";
 
 const cardSections = [
@@ -28,13 +29,11 @@ function FighterButton({ fighter, colorClasses, isLoser }) {
   const isWinner = fighter.result === "W";
 
   return (
-    <a
+    <FighterLink
       className={`inline-flex h-10 min-w-0 flex-1 items-center justify-center gap-1.5 rounded-md px-3 text-md font-medium text-neutral-100 ${colorClasses} ${
         isLoser ? "opacity-40" : ""
       }`}
-      href={fighter.link || undefined}
-      rel="noreferrer"
-      target="_blank"
+      fighter={fighter}
     >
       <span className="truncate">{fighter.name}</span>
       {isWinner ? (
@@ -42,7 +41,7 @@ function FighterButton({ fighter, colorClasses, isLoser }) {
           ✓
         </span>
       ) : null}
-    </a>
+    </FighterLink>
   );
 }
 

@@ -1,3 +1,4 @@
+import FighterLink from "./FighterLink";
 import formatDate from "../utils/formatDate";
 
 const fightCardSections = [
@@ -36,23 +37,19 @@ function FightCard({ event }) {
           className="mx-auto flex max-w-2xl items-center justify-center gap-2 pb-2"
           key={key}
         >
-          <a
+          <FighterLink
             className="inline-flex h-10 min-w-0 flex-1 items-center justify-center rounded-md bg-red-600 px-3 text-md font-medium text-neutral-100 hover:bg-red-400"
-            href={fight.fighter1.link || undefined}
-            rel="noreferrer"
-            target="_blank"
+            fighter={fight.fighter1}
           >
             <span className="truncate">{fight.fighter1.name}</span>
-          </a>
+          </FighterLink>
           <span className="w-10 shrink-0 text-center font-bold">vs</span>
-          <a
+          <FighterLink
             className="inline-flex h-10 min-w-0 flex-1 items-center justify-center rounded-md bg-blue-600 px-3 text-md font-medium text-neutral-100 hover:bg-blue-400"
-            href={fight.fighter2.link || undefined}
-            rel="noreferrer"
-            target="_blank"
+            fighter={fight.fighter2}
           >
             <span className="truncate">{fight.fighter2.name}</span>
-          </a>
+          </FighterLink>
         </li>
       );
     });
