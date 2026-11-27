@@ -2,6 +2,7 @@ import { Building2, CalendarDays, Clock, MapPin } from "lucide-react";
 
 import Chip from "./Chip";
 import FighterLink from "./FighterLink";
+import VsLink from "./VsLink";
 import formatDate from "../utils/formatDate";
 
 const fightCardSections = [
@@ -46,7 +47,7 @@ function FightCard({ event }) {
           >
             <span className="truncate">{fight.fighter1.name}</span>
           </FighterLink>
-          <span className="w-10 shrink-0 text-center font-bold">vs</span>
+          <VsLink fight={fight} />
           <FighterLink
             className="inline-flex h-10 min-w-0 flex-1 items-center justify-center rounded-md bg-blue-600 px-3 text-md font-medium text-neutral-100 hover:bg-blue-400"
             fighter={fight.fighter2}

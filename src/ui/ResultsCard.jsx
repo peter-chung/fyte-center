@@ -2,6 +2,7 @@ import { CalendarDays, Check, MapPin } from "lucide-react";
 
 import Chip from "./Chip";
 import FighterLink from "./FighterLink";
+import VsLink from "./VsLink";
 import { formatEventDate } from "../utils/formatDate";
 
 const cardSections = [
@@ -61,7 +62,7 @@ function FightResult({ fight }) {
           colorClasses="bg-red-600 hover:bg-red-400"
           isLoser={hasWinner && fighter1.result !== "W"}
         />
-        <span className="w-10 shrink-0 text-center font-bold">vs</span>
+        <VsLink completed fight={fight} />
         <FighterButton
           fighter={fighter2}
           colorClasses="bg-blue-600 hover:bg-blue-400"

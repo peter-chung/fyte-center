@@ -3,15 +3,16 @@ import { resultSummary } from "./events";
 
 // A fighter's profile plus every fight they're in (past and booked), each with
 // its event and both corners, so the opponent can be picked out. One request:
-// PostgREST embeds rows along the foreign keys.
+// PostgREST embeds rows along the foreign keys. Takedown attempts (theirs and
+// the opponent's) tell a real 0% takedown stat from "never attempted".
 const fighterSelect = `
   *,
   fight_stats (
-    result,
+    result, td_attempted,
     fights (
       fight_id, weight_class, method, method_category, finish_round, finish_time, details,
       events ( event_id, name, event_date, completed ),
-      fight_stats ( fighter_id, fighters ( first_name, last_name ) )
+      fight_stats ( fighter_id, td_attempted, fighters ( first_name, last_name ) )
     )
   )
 `;
@@ -70,6 +71,40 @@ function toHistoryEntry(fighterId, stat) {
   };
 }
 
+// ufcstats shows 0% takedown accuracy for a fighter who never tried a
+// takedown, and 0% takedown defense when nobody ever tried one on them. Both
+// read as a real (bad) 0%, so mark them not applicable instead. Only when the
+// per-fight numbers back it up: fights without detailed stats don't count.
+function notApplicableStats(row) {
+  const ownAttempts = [];
+  const attemptsAgainst = [];
+
+  for (const stat of row.fight_stats) {
+    if (!stat.fights?.events?.completed) {
+      continue;
+    }
+    if (stat.td_attempted != null) {
+      ownAttempts.push(stat.td_attempted);
+    }
+    const opponent = stat.fights.fight_stats.find((other) => other.fighter_id !== row.fighter_id);
+    if (opponent?.td_attempted != null) {
+      attemptsAgainst.push(opponent.td_attempted);
+    }
+  }
+
+  const none = (values) => values.length > 0 && values.every((value) => value === 0);
+  const reasons = {};
+
+  if (!row.career_td_acc_pct && none(ownAttempts)) {
+    reasons.tdAccPct = "No takedowns attempted";
+  }
+  if (!row.career_td_def_pct && none(attemptsAgainst)) {
+    reasons.tdDefPct = "No takedowns attempted against";
+  }
+
+  return reasons;
+}
+
 // Newest first; booked fights (later dates) land on top.
 function byDateDesc(a, b) {
   return (b.eventDate ?? "").localeCompare(a.eventDate ?? "");
@@ -80,6 +115,7 @@ function toFighter(row) {
     .filter((stat) => stat.fights)
     .map((stat) => toHistoryEntry(row.fighter_id, stat))
     .sort(byDateDesc);
+  const notApplicable = notApplicableStats(row);
 
   return {
     fighterId: row.fighter_id,
@@ -90,7 +126,9 @@ function toFighter(row) {
     // ufcstats doesn't list a division, so use the latest bout's.
     weightClass: history.find((entry) => entry.weightClass)?.weightClass || "",
     height: formatHeight(row.height_inches),
+    heightInches: row.height_inches ?? null,
     reach: row.reach_inches ? `${row.reach_inches}"` : "",
+    reachInches: row.reach_inches ?? null,
     stance: row.stance || "",
     age: ageOn(row.date_of_birth),
     record: formatRecord(
@@ -106,10 +144,12 @@ function toFighter(row) {
       sigStrAbsorbedPerMin: row.career_sig_str_absorbed_per_min,
       sigStrDefPct: row.career_sig_str_def_pct,
       tdAvgPer15: row.career_td_avg_per_15min,
-      tdAccPct: row.career_td_acc_pct,
-      tdDefPct: row.career_td_def_pct,
+      tdAccPct: notApplicable.tdAccPct ? null : row.career_td_acc_pct,
+      tdDefPct: notApplicable.tdDefPct ? null : row.career_td_def_pct,
       subAvgPer15: row.career_sub_avg_per_15min,
     },
+    // stat key → why it's N/A (see notApplicableStats)
+    notApplicable,
     history,
   };
 }
