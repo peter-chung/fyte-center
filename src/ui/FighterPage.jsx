@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import {
-  ArrowLeft,
   Cake,
   ExternalLink,
   Footprints,
@@ -11,57 +10,14 @@ import {
   Scale,
 } from "lucide-react";
 
+import BackButton from "./BackButton";
 import Chip from "./Chip";
 import Loader from "./Loader";
 import NotFound from "./NotFound";
+import ResultBadge from "./ResultBadge";
 import { getFighter } from "../data/fighters";
+import { careerStatDisplay, statRows } from "../utils/fighterStats";
 import { formatEventDate } from "../utils/formatDate";
-
-const resultStyles = {
-  W: { label: "W", classes: "bg-green-600 text-white" },
-  L: { label: "L", classes: "bg-red-600 text-white" },
-  D: { label: "D", classes: "bg-neutral-500 text-white" },
-  NC: { label: "NC", classes: "bg-neutral-500 text-white" },
-};
-
-const statRows = [
-  { key: "sigStrLandedPerMin", label: "Sig. strikes landed / min" },
-  { key: "sigStrAccPct", label: "Striking accuracy", pct: true },
-  { key: "sigStrAbsorbedPerMin", label: "Sig. strikes absorbed / min" },
-  { key: "sigStrDefPct", label: "Striking defense", pct: true },
-  { key: "tdAvgPer15", label: "Takedowns / 15 min" },
-  { key: "tdAccPct", label: "Takedown accuracy", pct: true },
-  { key: "tdDefPct", label: "Takedown defense", pct: true },
-  { key: "subAvgPer15", label: "Submission attempts / 15 min" },
-];
-
-function formatStat(value, pct) {
-  if (value == null) {
-    return "–";
-  }
-
-  return pct ? `${Math.round(value)}%` : value.toFixed(2);
-}
-
-function ResultBadge({ entry }) {
-  const style = resultStyles[entry.result];
-
-  if (!style) {
-    return (
-      <span className="inline-flex h-7 w-12 shrink-0 items-center justify-center rounded-md px-2 text-xs font-semibold ring-1 ring-neutral-300 dark:ring-neutral-600">
-        {entry.completed ? "–" : "Next"}
-      </span>
-    );
-  }
-
-  return (
-    <span
-      className={`inline-flex h-7 w-12 shrink-0 items-center justify-center rounded-md px-2 text-xs font-semibold ${style.classes}`}
-    >
-      {style.label}
-    </span>
-  );
-}
 
 function HistoryRow({ entry }) {
   const { opponent } = entry;
@@ -96,32 +52,6 @@ function HistoryRow({ entry }) {
         </p>
       </div>
     </li>
-  );
-}
-
-// Goes back to whatever card or fighter was open before. Hidden when the page
-// was opened directly (a shared link): there's nothing in the app to go back
-// to, and the sidebar is right there. React Router gives the first page of a
-// visit the key "default".
-function BackButton() {
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  if (location.key === "default") {
-    return null;
-  }
-
-  return (
-    <div className="mx-auto max-w-3xl px-6 text-left">
-      <button
-        className="inline-flex items-center gap-1 text-sm font-medium text-neutral-500 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-white"
-        onClick={() => navigate(-1)}
-        type="button"
-      >
-        <ArrowLeft aria-hidden="true" className="h-4 w-4" />
-        Back
-      </button>
-    </div>
   );
 }
 
@@ -209,17 +139,28 @@ function FighterPage() {
           <section className="mx-auto max-w-2xl pt-4">
             <h3 className="pb-2 text-lg font-medium">Career Stats</h3>
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-              {statRows.map((row) => (
-                <div
-                  className="rounded-md bg-neutral-100 px-3 py-2 dark:bg-neutral-700"
-                  key={row.key}
-                >
-                  <p className="text-xl font-semibold">
-                    {formatStat(fighter.careerStats[row.key], row.pct)}
-                  </p>
-                  <p className="text-xs text-neutral-500 dark:text-neutral-300">{row.label}</p>
-                </div>
-              ))}
+              {statRows.map((row) => {
+                const stat = careerStatDisplay(fighter, row);
+
+                return (
+                  <div
+                    className="rounded-md bg-neutral-100 px-3 py-2 dark:bg-neutral-700"
+                    key={row.key}
+                    title={stat.reason ?? undefined}
+                  >
+                    <p
+                      className={`text-xl font-semibold ${
+                        stat.reason ? "text-neutral-400 dark:text-neutral-400" : ""
+                      }`}
+                    >
+                      {stat.text}
+                    </p>
+                    <p className="text-xs text-neutral-500 dark:text-neutral-300">
+                      {stat.reason ?? row.label}
+                    </p>
+                  </div>
+                );
+              })}
             </div>
           </section>
         ) : null}

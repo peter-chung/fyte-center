@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { DarkModeProvider } from "./context/DarkModeContext";
 import Layout from "./ui/Layout";
 import EventPage from "./ui/EventPage";
+import FightPage from "./ui/FightPage";
 import FighterPage from "./ui/FighterPage";
 import NotFound from "./ui/NotFound";
 
@@ -10,6 +11,7 @@ import NotFound from "./ui/NotFound";
 // /results           → most recent results
 // /events/:eventId   → any event, upcoming or past (shareable link)
 // /fighters/:fighterId → fighter profile, career stats and UFC fight history
+// /fights/:fightId   → head-to-head of the two fighters in a bout
 function App() {
   return (
     <DarkModeProvider>
@@ -20,6 +22,7 @@ function App() {
             <Route path="results" element={<EventPage defaultTab="results" />} />
             <Route path="events/:eventId" element={<EventPage />} />
             <Route path="fighters/:fighterId" element={<FighterPage />} />
+            <Route path="fights/:fightId" element={<FightPage />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
